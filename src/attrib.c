@@ -675,7 +675,7 @@ int x;
 		else return((schar)((tmp >= 125) ? 125 : (tmp <= 3) ? 3 : tmp));
 #endif
 	} else if (x == A_CHA) {
-		if (tmp < 18 && (youmonst.data->mlet == S_NYMPH ||
+		if (tmp < 18 && ((youmonst.data && youmonst.data->mlet == S_NYMPH) ||
 		    u.umonnum==PM_SUCCUBUS || u.umonnum == PM_INCUBUS))
 		    return 18;
 	} else if (x == A_INT || x == A_WIS) {
