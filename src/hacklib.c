@@ -618,6 +618,13 @@ friday_13th()
 	return((boolean)(lt->tm_wday == 5 /* friday */ && lt->tm_mday == 13));
 }
 
+boolean
+yuletime()
+{
+    register struct tm *lt = getlt();
+    return((boolean)(lt->tm_mon == 11 && (lt->tm_mday == 24 || lt->tm_mday == 25)));
+}
+
 int
 night()
 {

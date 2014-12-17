@@ -444,6 +444,17 @@ boolean artif;
 		blessorcurse(otmp, 10);
 		break;
 	    case SLIME_MOLD:
+		if ((moves > 1L) && yuletime() && !rn2(2)) {
+		    char *yule_edibles[] = {
+			"chocolate-covered slime mold",
+			"candy cane",
+			"gingerbread",
+			"shortbread",
+			"sugar plum",
+		    };
+		    otmp->spe = fruitadd(yule_edibles[rn2(SIZE(yule_edibles))]);
+		    break;
+		}
 		otmp->spe = current_fruit;
 		break;
 	    case KELP_FROND:

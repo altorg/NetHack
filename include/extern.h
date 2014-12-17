@@ -787,6 +787,7 @@ E char *FDECL(yymmdd, (time_t));
 E long FDECL(yyyymmdd, (time_t));
 E int NDECL(phase_of_the_moon);
 E boolean NDECL(friday_13th);
+E boolean NDECL(yuletime);
 E int NDECL(night);
 E int NDECL(midnight);
 
