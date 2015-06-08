@@ -625,6 +625,15 @@ yuletime()
     return((boolean)(lt->tm_mon == 11 && (lt->tm_mday == 24 || lt->tm_mday == 25)));
 }
 
+boolean
+aprilfoolsday()
+{
+    register struct tm *lt = getlt();
+    return(boolean)((lt->tm_mon==3) && (lt->tm_mday==1));
+}
+
+
+
 int
 night()
 {

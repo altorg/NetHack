@@ -20,6 +20,65 @@ char msgs[DUMPMSGS][BUFSZ];
 int lastmsg = -1;
 #endif
 
+static int is_aprilfools = -1;
+
+
+char *
+aprilfools2014(line)
+     const char *line;
+{
+    static char buf[BUFSZ];
+    char *src, *dst;
+    char prev = ' ';
+    memcpy(buf, line, strlen(line)+1);
+    for (src = dst = buf; *src != '\0'; prev = *src, src++) {
+	*dst = *src;
+	if (*dst == 'e' && prev != ' ') continue;
+	dst++;
+    }
+    *dst = '\0';
+    return buf;
+}
+
+
+char *
+aprilfools2015(line)
+     const char *line;
+{
+    static char buf[BUFSZ];
+    char *pos;
+    memcpy(buf, line, strlen(line)+1);
+    pos = buf;
+    while (pos < (buf + strlen(buf))) {
+	char *startp;
+	char *endp;
+	while (*pos && !isalpha(*pos)) pos++;
+	startp = pos;
+	while (*pos && isalpha(*pos)) pos++;
+	endp = pos;
+	if (endp - startp > 2) {
+	    int cnt = rn2(endp - startp - 1) % 3;
+	    while (--cnt > 0) {
+		char *ap = startp + rn2(endp - startp);
+		char *bp = startp + rn2(endp - startp);
+		if ((ap != bp) && (isupper(*ap) == isupper(*bp))) {
+		    char tmp = *ap;
+		    *ap = *bp;
+		    *bp = tmp;
+		}
+	    }
+	}
+    }
+    return buf;
+}
+
+char *
+aprilfools(line)
+     const char *line;
+{
+    if (!(u.ubirthday % 2)) return aprilfools2015(line);
+    return aprilfools2014(line);
+}
 
 void
 msgpline_add(typ, pattern)
@@ -150,6 +209,13 @@ pline VA_DECL(const char *, line)
 	if (u.ux) flush_screen(1);		/* %% */
 	if (typ == MSGTYP_NOSHOW) return;
 	if (typ == MSGTYP_NOREP && !strcmp(line, prevmsg)) return;
+
+	if (is_aprilfools > 0) {
+	    line = aprilfools(line);
+	} else if (is_aprilfools < 0) {
+	    is_aprilfools = aprilfoolsday();
+	}
+
 	putstr(WIN_MESSAGE, 0, line);
 	strncpy(prevmsg, line, BUFSZ);
 	if (typ == MSGTYP_STOP) display_nhwindow(WIN_MESSAGE, TRUE); /* --more-- */

@@ -790,6 +790,7 @@ E boolean NDECL(friday_13th);
 E boolean NDECL(yuletime);
 E int NDECL(night);
 E int NDECL(midnight);
+E boolean NDECL(aprilfoolsday);
 
 /* ### invent.c ### */
 
