@@ -478,9 +478,10 @@ setrandom()
   int rnd[2];
 
   fptr = fopen("/dev/urandom","r");
-  if (fptr) fread((void *)rnd, sizeof(int),1,fptr);
-  fclose(fptr);
-  
+  if (fptr) {
+      fread((void *)rnd, sizeof(int),1,fptr);
+      fclose(fptr);
+  }
 	/* the types are different enough here that sweeping the different
 	 * routine names into one via #defines is even more confusing
 	 */
