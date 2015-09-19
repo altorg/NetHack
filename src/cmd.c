@@ -426,11 +426,17 @@ extcmd_via_menu()	/* here after # - now show pick-list of possible commands */
 		    Sprintf(prompt, "%s or %s", choices[i-1]->ef_txt,
 				choices[i]->ef_txt);
 		} else {
+		  if ((strlen(prompt) + 4 + strlen(choices[i]->ef_txt) + 4 + 1) < QBUFSZ) {
 		    Strcat(prompt," or ");
 		    Strcat(prompt, choices[i]->ef_txt);
+		  } else {
+		    Strcat(prompt, " ...");
+		    goto skiploop;
+		  }
 		}
 		++acount;
 	    }
+skiploop:
 	    if (acount) {
 		/* flush buf */
 		Sprintf(buf, fmtstr, prompt);
