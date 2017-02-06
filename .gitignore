@@ -22,7 +22,7 @@ src/Sysunix
 src/config.h-t
 src/hack.h-t
 src/monstr.c
-src/nethack.343-nao
+src/nethack
 src/tile.c
 src/vis_tab.c
 util/dgn_comp
