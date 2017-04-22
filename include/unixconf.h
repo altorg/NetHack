@@ -102,8 +102,9 @@
  * If you want the static parts of your playground on a read-only file
  * system, define VAR_PLAYGROUND to be where the variable parts are kept.
  */
+#ifndef VAR_PLAYGROUND
 #define VAR_PLAYGROUND "/nh343/var"
-
+#endif
 
 /*
  * Define DEF_PAGER as your default pager, e.g. "/bin/cat" or "/usr/ucb/more"
