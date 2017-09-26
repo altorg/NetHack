@@ -1192,6 +1192,7 @@ register struct obj   *obj;
 	register int	disttmp; /* distance modifier */
 	int otyp = obj->otyp;
 	boolean guaranteed_hit = (u.uswallow && mon == u.ustuck);
+	int dieroll;
 
 	/* Differences from melee weapons:
 	 *
@@ -1282,6 +1283,7 @@ register struct obj   *obj;
 	    return(0);
 	}
 
+	dieroll = rnd(20);
 	if (obj->oclass == WEAPON_CLASS || is_weptool(obj) ||
 		obj->oclass == GEM_CLASS) {
 	    if (is_ammo(obj)) {
@@ -1318,8 +1320,8 @@ register struct obj   *obj;
 		tmp += weapon_hit_bonus(obj);
 	    }
 
-	    if (tmp >= rnd(20)) {
-		if (hmon(mon,obj,1)) {	/* mon still alive */
+	    if (tmp >= dieroll) {
+		if (hmon(mon,obj,1,dieroll)) {	/* mon still alive */
 		    cutworm(mon, bhitpos.x, bhitpos.y, obj);
 		}
 		exercise(A_DEX, TRUE);
@@ -1355,11 +1357,11 @@ register struct obj   *obj;
 
 	} else if (otyp == HEAVY_IRON_BALL) {
 	    exercise(A_STR, TRUE);
-	    if (tmp >= rnd(20)) {
+	    if (tmp >= dieroll) {
 		int was_swallowed = guaranteed_hit;
 
 		exercise(A_DEX, TRUE);
-		if (!hmon(mon,obj,1)) {		/* mon killed */
+		if (!hmon(mon,obj,1,dieroll)) {		/* mon killed */
 		    if (was_swallowed && !u.uswallow && obj == uball)
 			return 1;	/* already did placebc() */
 		}
@@ -1369,9 +1371,9 @@ register struct obj   *obj;
 
 	} else if (otyp == BOULDER) {
 	    exercise(A_STR, TRUE);
-	    if (tmp >= rnd(20)) {
+	    if (tmp >= dieroll) {
 		exercise(A_DEX, TRUE);
-		(void) hmon(mon,obj,1);
+		(void) hmon(mon,obj,1,dieroll);
 	    } else {
 		tmiss(obj, mon);
 	    }
@@ -1379,7 +1381,7 @@ register struct obj   *obj;
 	} else if ((otyp == EGG || otyp == CREAM_PIE ||
 		    otyp == BLINDING_VENOM || otyp == ACID_VENOM) &&
 		(guaranteed_hit || ACURR(A_DEX) > rnd(25))) {
-	    (void) hmon(mon, obj, 1);
+	    (void) hmon(mon, obj, 1, dieroll);
 	    return 1;	/* hmon used it up */
 
 	} else if (obj->oclass == POTION_CLASS &&
