@@ -157,7 +157,8 @@ struct flag {
 struct instance_flags {
 	boolean  cbreak;	/* in cbreak mode, rogue format */
 #ifdef CURSES_GRAPHICS
-    boolean  cursesgraphics;    /* Use portable curses extended characters */
+	boolean  classic_status;	/* What kind of horizontal statusbar to use */
+	boolean  cursesgraphics;	/* Use portable curses extended characters */
 #endif
 	boolean  DECgraphics;	/* use DEC VT-xxx extended character set */
 	boolean  echo;		/* 1 to echo characters */
@@ -342,6 +343,9 @@ struct instance_flags {
 #ifdef REALTIME_ON_BOTL
   boolean  showrealtime; /* show actual elapsed time */
 #endif
+  boolean msg_is_alert; /* suggest windowport should grab player's attention
+                         * and request <TAB> acknowlegement */
+
 };
 
 /*
