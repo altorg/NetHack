@@ -218,7 +218,15 @@ pline VA_DECL(const char *, line)
 
 	putstr(WIN_MESSAGE, 0, line);
 	strncpy(prevmsg, line, BUFSZ);
-	if (typ == MSGTYP_STOP) display_nhwindow(WIN_MESSAGE, TRUE); /* --more-- */
+	switch (typ) {
+	case MSGTYP_ALERT:
+	    iflags.msg_is_alert = TRUE; /* <TAB> */
+	    /* FT */
+	case MSGTYP_STOP:
+	    display_nhwindow(WIN_MESSAGE, TRUE); /* --more-- */
+	    break;
+	}
+	iflags.msg_is_alert = FALSE;
 }
 
 /*VARARGS1*/

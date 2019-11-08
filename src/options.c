@@ -80,6 +80,9 @@ static struct Bool_Opt
 #else
 	{"checkspace", (boolean *)0, FALSE, SET_IN_FILE},
 #endif
+#ifdef CURSES_GRAPHICS
+	{"classic_status", &iflags.classic_status, TRUE, SET_IN_FILE},
+#endif
 	{"cmdassist", &iflags.cmdassist, TRUE, SET_IN_GAME},
 # if defined(MICRO) || defined(WIN32) || defined(CURSES_GRAPHICS)
 	{"color",         &iflags.wc_color,TRUE, SET_IN_GAME},		/*WC*/
@@ -637,6 +640,7 @@ initoptions()
 #ifdef SORTLOOT
 	iflags.sortloot = 'n';
 #endif
+        iflags.msg_is_alert = FALSE;
 
      /* assert( sizeof flags.inv_order == sizeof def_inv_order ); */
 	(void)memcpy((genericptr_t)flags.inv_order,

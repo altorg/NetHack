@@ -421,21 +421,22 @@ m_throw(mon, x, y, dx, dy, range, obj)
 			(void) drop_throw(singleobj, hitu, u.ux, u.uy);
 			break;
 		    }
-		} else if (!range	/* reached end of path */
-			/* missile hits edge of screen */
-			|| !isok(bhitpos.x+dx,bhitpos.y+dy)
-			/* missile hits the wall */
-			|| IS_ROCK(levl[bhitpos.x+dx][bhitpos.y+dy].typ)
-			/* missile hit closed door */
-			|| closed_door(bhitpos.x+dx, bhitpos.y+dy)
-			/* missile might hit iron bars */
-			|| (levl[bhitpos.x+dx][bhitpos.y+dy].typ == IRONBARS &&
-			hits_bars(&singleobj, bhitpos.x, bhitpos.y, !rn2(5), 0))
+		}
+                if (!range /* reached end of path */
+                    /* missile hits edge of screen */
+                    || !isok(bhitpos.x+dx,bhitpos.y+dy)
+                    /* missile hits the wall */
+                    || IS_ROCK(levl[bhitpos.x+dx][bhitpos.y+dy].typ)
+                    /* missile hit closed door */
+                    || closed_door(bhitpos.x+dx, bhitpos.y+dy)
+                    /* missile might hit iron bars */
+                    || (levl[bhitpos.x+dx][bhitpos.y+dy].typ == IRONBARS &&
+                    hits_bars(&singleobj, bhitpos.x, bhitpos.y, !rn2(5), 0))
 #ifdef SINKS
-			/* Thrown objects "sink" */
-			|| IS_SINK(levl[bhitpos.x][bhitpos.y].typ)
+		    /* Thrown objects "sink" */
+		    || IS_SINK(levl[bhitpos.x][bhitpos.y].typ)
 #endif
-								) {
+		    ) {
 		    if (singleobj) /* hits_bars might have destroyed it */
 			(void) drop_throw(singleobj, 0, bhitpos.x, bhitpos.y);
 		    break;
